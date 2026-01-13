@@ -1,0 +1,13 @@
+# Exclude large directories and files from Vercel deployment
+node_modules
+**/node_modules
+backend/uploads
+backend/uploads/**
+backend/*.db
+backend/dev.db
+backend/package-lock.json
+frontend/node_modules
+frontend/bun.lockb
+*.log
+.DS_Store
+
