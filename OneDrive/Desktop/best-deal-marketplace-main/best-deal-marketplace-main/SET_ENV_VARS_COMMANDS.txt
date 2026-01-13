@@ -1,0 +1,50 @@
+# Manual Commands to Set Environment Variables
+# Copy and paste these commands one by one in PowerShell
+# Replace the values with your actual values
+
+# ============================================
+# STEP 1: Generate JWT_SECRET
+# ============================================
+# Run this to generate a secure JWT_SECRET:
+[Convert]::ToBase64String((1..32 | ForEach-Object { Get-Random -Maximum 256 }))
+
+# Copy the output and use it in the commands below
+
+# ============================================
+# STEP 2: Set DATABASE_URL
+# ============================================
+# Replace YOUR_POSTGRESQL_CONNECTION_STRING with your actual connection string
+echo "YOUR_POSTGRESQL_CONNECTION_STRING" | vercel env add DATABASE_URL production
+echo "YOUR_POSTGRESQL_CONNECTION_STRING" | vercel env add DATABASE_URL preview
+echo "YOUR_POSTGRESQL_CONNECTION_STRING" | vercel env add DATABASE_URL development
+
+# ============================================
+# STEP 3: Set JWT_SECRET
+# ============================================
+# Replace YOUR_GENERATED_JWT_SECRET with the secret you generated above
+echo "YOUR_GENERATED_JWT_SECRET" | vercel env add JWT_SECRET production
+echo "YOUR_GENERATED_JWT_SECRET" | vercel env add JWT_SECRET preview
+echo "YOUR_GENERATED_JWT_SECRET" | vercel env add JWT_SECRET development
+
+# ============================================
+# STEP 4: Set Cloudinary Variables
+# ============================================
+# Replace with your actual Cloudinary values
+echo "YOUR_CLOUDINARY_CLOUD_NAME" | vercel env add CLOUDINARY_CLOUD_NAME production
+echo "YOUR_CLOUDINARY_CLOUD_NAME" | vercel env add CLOUDINARY_CLOUD_NAME preview
+echo "YOUR_CLOUDINARY_CLOUD_NAME" | vercel env add CLOUDINARY_CLOUD_NAME development
+
+echo "YOUR_CLOUDINARY_API_KEY" | vercel env add CLOUDINARY_API_KEY production
+echo "YOUR_CLOUDINARY_API_KEY" | vercel env add CLOUDINARY_API_KEY preview
+echo "YOUR_CLOUDINARY_API_KEY" | vercel env add CLOUDINARY_API_KEY development
+
+echo "YOUR_CLOUDINARY_API_SECRET" | vercel env add CLOUDINARY_API_SECRET production
+echo "YOUR_CLOUDINARY_API_SECRET" | vercel env add CLOUDINARY_API_SECRET preview
+echo "YOUR_CLOUDINARY_API_SECRET" | vercel env add CLOUDINARY_API_SECRET development
+
+# ============================================
+# STEP 5: Verify (Optional)
+# ============================================
+# List all environment variables
+vercel env ls
+

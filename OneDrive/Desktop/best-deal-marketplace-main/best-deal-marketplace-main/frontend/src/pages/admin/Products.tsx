@@ -160,8 +160,10 @@ export default function AdminProducts() {
       setEditingProduct(null);
       resetForm();
     } catch (error: unknown) {
-      const err = error as { response?: { data?: { message?: string } } };
-      toast.error(err.response?.data?.message || "An error occurred");
+      const err = error as { response?: { data?: { message?: string; error?: string } } };
+      const errorMessage = err.response?.data?.message || err.response?.data?.error || "An error occurred";
+      console.error("Product save error:", err.response?.data);
+      toast.error(errorMessage);
     } finally {
       setSaving(false);
     }

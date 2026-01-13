@@ -70,9 +70,15 @@ router.post("/signup", async (req, res) => {
   } catch (err) {
     console.error("Signup error:", err);
     console.error("Error stack:", err.stack);
+    console.error("Error details:", {
+      name: err.name,
+      message: err.message,
+      code: err.code,
+    });
     res.status(500).json({
       message: "Server error",
-      error: process.env.NODE_ENV === "development" ? err.message : undefined,
+      error: err.message || "Unknown error",
+      code: err.code,
     });
   }
 });
