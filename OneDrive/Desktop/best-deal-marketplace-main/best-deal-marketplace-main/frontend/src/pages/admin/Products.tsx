@@ -65,6 +65,7 @@ export default function AdminProducts() {
     stock: "0",
     is_active: true,
   });
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   useEffect(() => {
     fetchData();
@@ -97,6 +98,7 @@ export default function AdminProducts() {
       stock: String(product.stock),
       is_active: product.isActive,
     });
+    setImageFile(null);
     setDialogOpen(true);
   };
 
@@ -118,11 +120,24 @@ export default function AdminProducts() {
     setSaving(true);
 
     try {
+      let uploadedImageUrl: string | null = null;
+
+      // If a file is selected, upload it first
+      if (imageFile) {
+        const form = new FormData();
+        form.append("image", imageFile);
+        const { data: uploadRes } = await api.post("/products/upload", form, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        uploadedImageUrl = uploadRes?.url || null;
+      }
+
       const productData = {
         name: formData.name,
         description: formData.description || null,
         price: parseFloat(formData.price),
-        imageUrl: formData.image_url || null,
+        // Prefer uploaded image URL, otherwise fall back to manual URL
+        imageUrl: uploadedImageUrl ?? (formData.image_url || null),
         categoryId: formData.category_id || null,
         stock: parseInt(formData.stock),
         isActive: formData.is_active,
@@ -166,6 +181,7 @@ export default function AdminProducts() {
       stock: "0",
       is_active: true,
     });
+    setImageFile(null);
   };
 
   const filteredProducts = products.filter((p) =>
@@ -290,11 +306,32 @@ export default function AdminProducts() {
                     }
                     placeholder="https://..."
                   />
-                  {formData.image_url ? (
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="image">Or upload image file</Label>
+                  <Input
+                    id="image"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0] || null;
+                      setImageFile(file);
+                    }}
+                  />
+                  {imageFile ? (
+                    <div className="mt-2 h-24 w-full rounded-lg bg-muted overflow-hidden">
+                      <img
+                        src={URL.createObjectURL(imageFile)}
+                        alt="Preview"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  ) : formData.image_url ? (
                     <div className="mt-2 h-24 w-full rounded-lg bg-muted overflow-hidden">
                       <img
                         src={formData.image_url}
-                        alt="Preview"
+                        alt="Current"
                         className="h-full w-full object-cover"
                       />
                     </div>
