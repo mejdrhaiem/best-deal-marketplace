@@ -28,3 +28,4 @@ echo $CLOUDINARY_API_SECRET | vercel env add CLOUDINARY_API_SECRET development
 Write-Host ""
 Write-Host "Cloudinary variables set successfully!" -ForegroundColor Green
 
+

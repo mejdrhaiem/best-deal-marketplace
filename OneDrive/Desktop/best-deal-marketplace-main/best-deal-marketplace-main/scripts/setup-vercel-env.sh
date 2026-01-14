@@ -78,3 +78,4 @@ echo "  1. Deploy: vercel --prod"
 echo "  2. Check deployment logs for any errors"
 echo "  3. Test the signup endpoint"
 
+

@@ -82,3 +82,4 @@ Write-Host "  1. Deploy: vercel --prod"
 Write-Host "  2. Check deployment logs for any errors"
 Write-Host "  3. Test the signup endpoint"
 
+

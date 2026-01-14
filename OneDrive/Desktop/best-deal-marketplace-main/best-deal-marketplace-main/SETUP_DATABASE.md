@@ -249,3 +249,4 @@ After the database is set up:
 
 Your application should now be fully functional on Vercel! 🎉
 
+
